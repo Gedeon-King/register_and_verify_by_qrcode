@@ -14,12 +14,12 @@ $user = null;
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["user_id"]) && is_numeric($_POST["user_id"])) {
-        $user_id = $_POST["user_id"];
+    if (isset($_POST["contact"]) && is_numeric($_POST["contact"])) {
+        $contact = $_POST["contact"];
         
         // Get user information
-        $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE id = ?");
-        $stmt->bind_param("i", $user_id);
+        $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE contact = ?");
+        $stmt->bind_param("i", $contact);
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // If confirming seat
             if (isset($_POST["confirm_seat"]) && $_POST["confirm_seat"] == "yes") {
                 $update_stmt = $conn->prepare("UPDATE utilisateurs SET seat_confirmed = 'oui' WHERE id = ?");
-                $update_stmt->bind_param("i", $user_id);
+                $update_stmt->bind_param("i", $contact);
                 
                 if ($update_stmt->execute()) {
                     $message = "<div class='success'>Siège confirmé avec succès!</div>";
@@ -193,8 +193,8 @@ $conn->close();
             <h3>Ou entrez l'ID manuellement:</h3>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="form-group">
-                    <label for="user_id">ID de l'utilisateur:</label>
-                    <input type="number" id="user_id" name="user_id" required>
+                    <label for="contact">ID de l'utilisateur:</label>
+                    <input type="number" id="contact" name="contact" required>
                 </div>
                 <button type="submit">Vérifier</button>
             </form>
@@ -209,8 +209,8 @@ $conn->close();
             <?php else: ?>
                 <div class="seat-not-confirmed">Siège Non Confirmé</div>
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <input type="hidden" name="user_id" style="margin-bottom: 10px;" value="<?php echo $user["id"]; ?>">
-                    <input type="hidden" name="confirm_seat" value="yes">
+                    <input type="hidden" name="contact" style="margin-bottom: 10px;" value="<?php echo $user["id"]; ?>">
+                    <input type="hidden" name="confirm_seat" style="margin-bottom: 10px;" value="yes">
                     <button type="submit">Confirmer le Siège</button>
                 </form>
             <?php endif; ?>
@@ -271,7 +271,7 @@ $conn->close();
             if (idMatch) {
                 // const userId = idMatch[1]; // Extract the ID from the match 
                 const userId = idMatch; // Extract the ID from the match 
-                document.getElementById('user_id').value = userId;
+                document.getElementById('contact').value = userId;
                 document.querySelector('form').submit();
             } else {
                 document.getElementById('qr-reader-results').innerHTML = 
