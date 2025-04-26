@@ -154,6 +154,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
+    
     <h1>Liste des inscriptions</h1>
 
     <?php
@@ -167,8 +168,9 @@ $result = $conn->query($sql);
     ?>
 
     <div class="filter-container">
-        <a href="verify.php" class="export-btn" style="margin-right: 10px;">Scanner QR Code</a>
-        <a href="export_excel.php" class="export-btn" style="margin-right: 10px;">Télécharger Excel</a>
+        <a href="verify" class="export-btn" style="margin-right: 10px;">Scanner QR Code</a>
+        <a href="index" class="export-btn" style="margin-right: 10px;">Inscription</a>
+        <a href="export_excel" class="export-btn" style="margin-right: 10px;">Télécharger Excel</a>
     </div>
 
     <?php if ($result->num_rows > 0): ?>

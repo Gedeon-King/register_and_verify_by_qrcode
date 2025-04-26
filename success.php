@@ -161,7 +161,7 @@ $conn->close();
         <div>
             <button class="print-button" onclick="window.print()">Imprimer</button>
         </div>
-        
+
         <h2>Inscription Réussie</h2>
         <div class="success-message">Votre inscription a été enregistrée avec succès!</div>
 
@@ -216,7 +216,7 @@ $conn->close();
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const qrCodeDiv = document.getElementById('qrcode');
-                    const userId = "<?php echo htmlspecialchars($user['id']); ?>"; // récupère ID PHP
+                    const userId = "<?php echo htmlspecialchars($user['contact']); ?>"; // récupère ID PHP
 
                     qrCodeDiv.innerHTML = ""; // Clear any previous QR Code
                     if (userId.trim() !== "") {

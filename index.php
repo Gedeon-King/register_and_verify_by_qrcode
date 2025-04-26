@@ -15,6 +15,7 @@ $nom = $prenom = $contact = $quartier = $eglise_membre = $nom_eglise = $experien
 $errors = []; // Array to store errors
 
 // Process form submission
+// Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate name
     if (empty($_POST["nom"])) {
@@ -35,6 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Le contact est requis";
     } else {
         $contact = test_input($_POST["contact"]);
+
+        // Check if contact already exists in the database
+        $stmt_check_contact = $conn->prepare("SELECT * FROM utilisateurs WHERE contact = ?");
+        $stmt_check_contact->bind_param("s", $contact);
+        $stmt_check_contact->execute();
+        $result = $stmt_check_contact->get_result();
+        
+        if ($result->num_rows > 0) {
+            $errors[] = "Le contact existe déjà dans la base de données.";
+        }
+        $stmt_check_contact->close();
     }
 
     // Validate quartier
@@ -94,6 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
 
 // Function to sanitize form data
 function test_input($data)
@@ -251,7 +264,7 @@ function test_input($data)
                     <option value="" <?php if ($experience == "") echo "selected"; ?>>Sélectionner</option>
                     <option value="1ere" <?php if ($experience == "1ere") echo "selected"; ?>>1ère</option>
                     <option value="2eme" <?php if ($experience == "2eme") echo "selected"; ?>>2ème</option>
-                    <option value="les_deux" <?php if ($experience == "les_deux") echo "selected"; ?>>Les deux</option>
+                    <option value="les deux" <?php if ($experience == "les deux") echo "selected"; ?>>Les deux</option>
                     <option value="aucune" <?php if ($experience == "aucune") echo "selected"; ?>>Aucune</option>
                 </select>
             </div>

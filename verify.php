@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // If confirming seat
             if (isset($_POST["confirm_seat"]) && $_POST["confirm_seat"] == "yes") {
-                $update_stmt = $conn->prepare("UPDATE utilisateurs SET seat_confirmed = 'oui' WHERE id = ?");
+                $update_stmt = $conn->prepare("UPDATE utilisateurs SET seat_confirmed = 'oui' WHERE contact = ?");
                 $update_stmt->bind_param("i", $contact);
                 
                 if ($update_stmt->execute()) {
@@ -190,10 +190,10 @@ $conn->close();
         </div>
         
         <div class="form-container">
-            <h3>Ou entrez l'ID manuellement:</h3>
+            <h3>Ou entrez le contact manuellement:</h3>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="form-group">
-                    <label for="contact">ID de l'utilisateur:</label>
+                    <label for="contact">Contact de l'utilisateur:</label>
                     <input type="number" id="contact" name="contact" required>
                 </div>
                 <button type="submit">Vérifier</button>
@@ -207,10 +207,10 @@ $conn->close();
             <?php if ($user["seat_confirmed"] == "oui"): ?>
                 <div class="seat-confirmed">Siège Confirmé</div>
             <?php else: ?>
-                <div class="seat-not-confirmed">Siège Non Confirmé</div>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <input type="hidden" name="contact" style="margin-bottom: 10px;" value="<?php echo $user["id"]; ?>">
-                    <input type="hidden" name="confirm_seat" style="margin-bottom: 10px;" value="yes">
+                <div class="seat-not-confirmed" style="margin-bottom: 10px;">Siège Non Confirmé</div>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" style="margin-bottom: 10px;">
+                    <input type="hidden" name="contact"  value="<?php echo $user["contact"]; ?>">
+                    <input type="hidden" name="confirm_seat" value="yes">
                     <button type="submit">Confirmer le Siège</button>
                 </form>
             <?php endif; ?>
