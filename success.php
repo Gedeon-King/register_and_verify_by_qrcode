@@ -212,7 +212,8 @@ $conn->close();
             <!-- QR Code will be generated here -->
             <div id="qrcode"></div>
 
-            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+            <!-- <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>-->
+            <script src="qrcode.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const qrCodeDiv = document.getElementById('qrcode');
