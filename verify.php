@@ -173,8 +173,8 @@ $conn->close();
             margin: 0 auto;
         }
     </style>
-    <!-- <script src="https://unpkg.com/html5-qrcode"></script> -->
-    <script src="qrcode_reader.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- <script src="qrcode_reader.js"></script> -->
 </head>
 <body>
     <!-- Header Image -->
